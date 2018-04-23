@@ -1,7 +1,11 @@
 package app.util;
 
-import com.fasterxml.jackson.databind.*;
-import java.io.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
 
 public class JsonUtil {
     public static String dataToJson(Object data) {

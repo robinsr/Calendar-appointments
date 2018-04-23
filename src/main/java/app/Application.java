@@ -6,7 +6,12 @@ import app.util.Filters;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.*;
+import static spark.Spark.before;
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.put;
+import static spark.Spark.notFound;
 
 public class Application {
 

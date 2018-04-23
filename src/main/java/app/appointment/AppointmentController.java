@@ -6,8 +6,8 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import static app.util.JsonUtil.*;
 import static app.Application.appointmentDao;
+import static app.util.JsonUtil.dataToJson;
 
 public class AppointmentController {
 
