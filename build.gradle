@@ -16,6 +16,9 @@ repositories {
     mavenCentral()
 }
 
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
 dependencies {
     compile 'com.sparkjava:spark-core:2.3'
     compile 'com.sparkjava:spark-template-handlebars:2.5.5'
