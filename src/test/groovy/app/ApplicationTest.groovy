@@ -8,7 +8,7 @@ import com.mashape.unirest.http.Unirest
 
 
 class ApplicationTest extends Specification {
-    def port = Integer.parseInt(System.getProperty("server.port", Application.PORT));
+    def port = Integer.parseInt(System.getProperty("server.port", "4567"));
     def host = "http://localhost"
     def baseUrl = host + ":" + port
     def newAppt = "{" +
@@ -20,7 +20,8 @@ class ApplicationTest extends Specification {
         "}"
 
     void setupSpec() {
-        Application.main(null)
+        String[] args = [ "-p=4567" ]
+        Application.main(args)
         Unirest.setObjectMapper(new UnirestJacksonMapper())
     }
 

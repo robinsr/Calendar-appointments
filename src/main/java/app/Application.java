@@ -3,11 +3,13 @@ package app;
 import app.appointment.AppointmentController;
 import app.appointment.AppointmentDao;
 import app.util.Filters;
+import org.apache.commons.cli.*;
 import spark.Request;
 import spark.Response;
 
 import static spark.Spark.before;
 import static spark.Spark.get;
+import static spark.Spark.ipAddress;
 import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
@@ -15,17 +17,37 @@ import static spark.Spark.notFound;
 
 public class Application {
 
-    public static String PORT = "4567";
-
     public static AppointmentDao appointmentDao;
 
     public static void main(String[] args) {
 
-        int port = Integer.parseInt(System.getProperty("server.port", PORT));
+        Options options = new Options();
+        options.addOption(Option.builder("port")
+                .option("p")
+                .longOpt("port")
+                .desc("port for server to listen on")
+                .hasArg(true)
+                .required(true)
+                .build());
+
+        CommandLineParser parser = new DefaultParser();
+
+        try {
+            start(parser.parse(options, args));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void start(CommandLine cmd) {
+
+        int port = Integer.parseInt(cmd.getOptionValue('p'));
 
         appointmentDao = new AppointmentDao();
 
-        // Configure Spark
+        // Configure server listener
+
+        ipAddress("0.0.0.0");
         port(port);
 
         // Configure filters
