@@ -2,46 +2,47 @@ plugins {
     id 'java'
     id 'groovy'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'org.springframework.boot' version '3.0.1'
 }
 
 group 'com.github.robinsr'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.17
 
-mainClassName = "app.Application"
+mainClassName = "com.robinsr.Application"
 
 repositories {
     mavenCentral()
 }
 
 task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
+
 
 dependencies {
-    compile 'commons-cli:commons-cli:1.5.0'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    compile 'com.sparkjava:spark-core:2.7.2'
-    compile 'com.thedeanda:lorem:2.1'
-    compile 'joda-time:joda-time:2.9.9'
-    compile 'org.projectlombok:lombok:1.16.6'
-    compile 'org.slf4j:slf4j-simple:1.7.13'
-    testCompile 'com.mashape.unirest:unirest-java:1.4.9'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.codehaus.groovy:groovy-all:2.4.13'
-    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    implementation 'org.springframework.boot:spring-boot-starter-jersey:3.0.1'
+
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server
+    implementation 'org.glassfish.jersey.core:jersey-server:3.1.0'
+
+
+    implementation 'commons-cli:commons-cli:1.5.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    implementation 'com.sparkjava:spark-core:2.7.2'
+    implementation 'com.thedeanda:lorem:2.1'
+    implementation 'joda-time:joda-time:2.9.9'
+
+    implementation 'org.slf4j:slf4j-simple:1.7.13'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jersey
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+    testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.codehaus.groovy:groovy-all:2.4.13'
+    testImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
 }
 
-jar {
-    manifest {
-        attributes "Main-Class": mainClassName
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
